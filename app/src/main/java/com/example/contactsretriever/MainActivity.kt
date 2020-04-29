@@ -1,10 +1,15 @@
 package com.example.contactsretriever
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.example.contactsretriever.retrievers.ContactsRetriever
+
 
 class MainActivity : AppCompatActivity() {
+
+    private val TAG = "ContactsRetriever"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,7 +21,11 @@ class MainActivity : AppCompatActivity() {
             1
         )
 
-        val cr = applicationContext.contentResolver
-        ContactsRetriever(cr).getContacts()
+        val contactsRetriever =
+            ContactsRetriever(
+                applicationContext
+            )
+        val contacts = contactsRetriever.retrieve()
+        Log.i(TAG, "List of contacts:\n$contacts")
     }
 }
