@@ -5,10 +5,13 @@ import android.provider.ContactsContract
 
 class EmailsRetriever(contentResolver: ContentResolver) : BaseRetriever(contentResolver) {
 
-    override fun retrieve(contactId: String): MutableList<String> {
+    override suspend fun retrieve(contactId: String): MutableList<String> {
         val emails = mutableListOf<String>()
 
         val cursor = obtainCursor(
+            arrayOf(
+                ContactsContract.CommonDataKinds.Email.ADDRESS
+            ),
             arrayOf(
                 ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE,
                 contactId

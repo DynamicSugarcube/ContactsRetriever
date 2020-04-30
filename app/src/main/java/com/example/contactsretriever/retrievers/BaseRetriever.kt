@@ -6,17 +6,17 @@ import android.provider.ContactsContract
 
 abstract class BaseRetriever(protected val contentResolver: ContentResolver) {
 
-    abstract fun retrieve(contactId: String): Any
+    abstract suspend fun retrieve(contactId: String): Any
 
     companion object {
         fun getField(cursor: Cursor, field: String): String? =
             cursor.getString(cursor.getColumnIndex(field))
     }
 
-    protected fun obtainCursor(selectionArgs: Array<String>) =
+    protected fun obtainCursor(projection: Array<String>, selectionArgs: Array<String>) =
         contentResolver.query(
             ContactsContract.Data.CONTENT_URI,
-            null,
+            projection,
             ContactsContract.Data.MIMETYPE + " = ? AND " +
                     ContactsContract.Data.CONTACT_ID + " = ?",
             selectionArgs,

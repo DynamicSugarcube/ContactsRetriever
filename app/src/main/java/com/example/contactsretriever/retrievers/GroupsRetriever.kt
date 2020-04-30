@@ -5,10 +5,13 @@ import android.provider.ContactsContract
 
 class GroupsRetriever(contentResolver: ContentResolver) : BaseRetriever(contentResolver) {
 
-    override fun retrieve(contactId: String): HashMap<String, String> {
+    override suspend fun retrieve(contactId: String): HashMap<String, String> {
         val groups = hashMapOf<String, String>()
 
         val cursor = obtainCursor(
+            arrayOf(
+                ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID
+            ),
             arrayOf(
                 ContactsContract.CommonDataKinds.GroupMembership.CONTENT_ITEM_TYPE,
                 contactId

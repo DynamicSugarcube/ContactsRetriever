@@ -5,6 +5,7 @@ import android.content.Context
 import android.provider.ContactsContract
 import android.util.Log
 import com.example.contactsretriever.Contact
+import kotlinx.coroutines.*
 
 class ContactsRetriever(context: Context) {
 
@@ -12,7 +13,7 @@ class ContactsRetriever(context: Context) {
 
     private val contentResolver: ContentResolver = context.contentResolver
 
-    fun retrieve(): List<Contact> {
+    suspend fun retrieve(): List<Contact> {
         val contacts = mutableListOf<Contact>()
 
         // Configure URI to search in the local directory
@@ -21,9 +22,14 @@ class ContactsRetriever(context: Context) {
             ContactsContract.DIRECTORY_PARAM_KEY, ContactsContract.Directory.DEFAULT.toString()
         ).build()
 
+        val projection = arrayOf(
+            ContactsContract.Contacts._ID,
+            ContactsContract.Contacts.CUSTOM_RINGTONE
+        )
+
         val cursor = contentResolver.query(
             uri,
-            null,
+            projection,
             null,
             null,
             null
@@ -33,19 +39,46 @@ class ContactsRetriever(context: Context) {
             while (cursor != null && cursor.moveToNext()) {
                 val id = BaseRetriever.getField(cursor, ContactsContract.Contacts._ID) ?: continue
 
-                val (firstName, lastName) = NamesRetriever(contentResolver).retrieve(id)
+                var firstName = ""
+                var lastName = ""
+                var phones = mutableListOf<Contact.Phone>()
+                var emails = mutableListOf<String>()
+                var groups = hashMapOf<String, String>()
+                var ringerUri = ""
+                var photoUri = ""
 
-                val phones = PhonesRetriever(contentResolver).retrieve(id)
+                runBlocking {
+                    val taskNames = async(Dispatchers.IO) {
+                        val namesPair = NamesRetriever(contentResolver).retrieve(id)
+                        firstName = namesPair.first
+                        lastName = namesPair.second
+                    }
 
-                val emails = EmailsRetriever(contentResolver).retrieve(id)
+                    val taskPhones = async(Dispatchers.IO) {
+                        phones = PhonesRetriever(contentResolver).retrieve(id)
+                    }
 
-                val groups = GroupsRetriever(contentResolver).retrieve(id)
+                    val taskEmails = async(Dispatchers.IO) {
+                        emails = EmailsRetriever(contentResolver).retrieve(id)
+                    }
 
-                val ringerUri = RingtoneRetriever.retrieveRingtoneUri(
-                    BaseRetriever.getField(cursor, ContactsContract.Contacts.CUSTOM_RINGTONE)
-                )
+                    val taskGroups = async(Dispatchers.IO) {
+                        groups = GroupsRetriever(contentResolver).retrieve(id)
+                    }
 
-                val photoUri = PhotoRetriever.retrievePhotoUri(id)
+                    val taskRinger = async(Dispatchers.IO) {
+                        ringerUri = RingtoneRetriever.retrieveRingtoneUri(
+                            BaseRetriever.getField(
+                                cursor,
+                                ContactsContract.Contacts.CUSTOM_RINGTONE
+                            )
+                        )
+                    }
+
+                    val taskPhoto = async(Dispatchers.IO) {
+                        photoUri = PhotoRetriever.retrievePhotoUri(id)
+                    }
+                }
 
                 val contact = Contact(
                     id.toInt(),

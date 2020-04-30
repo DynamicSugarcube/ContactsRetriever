@@ -6,10 +6,14 @@ import com.example.contactsretriever.Contact
 
 class PhonesRetriever(contentResolver: ContentResolver) : BaseRetriever(contentResolver) {
 
-    override fun retrieve(contactId: String): MutableList<Contact.Phone> {
+    override suspend fun retrieve(contactId: String): MutableList<Contact.Phone> {
         val phones = mutableListOf<Contact.Phone>()
 
         val cursor = obtainCursor(
+            arrayOf(
+                ContactsContract.CommonDataKinds.Phone.NUMBER,
+                ContactsContract.CommonDataKinds.Phone.TYPE
+            ),
             arrayOf(
                 ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE,
                 contactId

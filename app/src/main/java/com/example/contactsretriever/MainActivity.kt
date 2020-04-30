@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.contactsretriever.retrievers.ContactsRetriever
+import kotlinx.coroutines.runBlocking
+import kotlin.system.measureTimeMillis
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,11 +23,16 @@ class MainActivity : AppCompatActivity() {
             1
         )
 
-        val contactsRetriever =
-            ContactsRetriever(
-                applicationContext
-            )
-        val contacts = contactsRetriever.retrieve()
-        Log.i(TAG, "List of contacts:\n$contacts")
+        val time = measureTimeMillis {
+            val contactsRetriever =
+                ContactsRetriever(
+                    applicationContext
+                )
+            runBlocking {
+                val contacts = contactsRetriever.retrieve()
+                Log.i(TAG, "List of contacts:\n$contacts")
+            }
+        }
+        Log.i(TAG, "Time: ${time / 1000.0} sec")
     }
 }
