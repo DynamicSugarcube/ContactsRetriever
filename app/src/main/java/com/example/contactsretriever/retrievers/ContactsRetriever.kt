@@ -3,17 +3,26 @@ package com.example.contactsretriever.retrievers
 import android.content.ContentResolver
 import android.content.Context
 import android.provider.ContactsContract
+import android.util.Log
 import com.example.contactsretriever.Contact
 
 class ContactsRetriever(context: Context) {
+
+    private val TAG = "ContactsRetriever"
 
     private val contentResolver: ContentResolver = context.contentResolver
 
     fun retrieve(): List<Contact> {
         val contacts = mutableListOf<Contact>()
 
+        // Configure URI to search in the local directory
+        var uri = ContactsContract.Contacts.CONTENT_URI
+        uri = uri.buildUpon().appendQueryParameter(
+            ContactsContract.DIRECTORY_PARAM_KEY, ContactsContract.Directory.DEFAULT.toString()
+        ).build()
+
         val cursor = contentResolver.query(
-            ContactsContract.Contacts.CONTENT_URI,
+            uri,
             null,
             null,
             null,
@@ -49,6 +58,7 @@ class ContactsRetriever(context: Context) {
                     photoUri
                 )
 
+                Log.i(TAG, "Fetch a contact:\n$contact")
                 contacts.add(contact)
             }
         }
