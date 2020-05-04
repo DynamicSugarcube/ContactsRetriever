@@ -5,20 +5,22 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.contactsretriever.Contact
 import com.example.contactsretriever.R
 import kotlinx.android.synthetic.main.contact_list_item.view.*
 
-class ContactListAdapter(private val data: List<Contact>,
-                         private val viewModel: ContactListViewModel) :
+class ContactListAdapter(private val viewModel: ContactListViewModel) :
     RecyclerView.Adapter<ContactListAdapter.ViewHolder>() {
 
     private val TAG = "ContactList[Adapter]"
 
-    init {
-        Log.d(TAG, "Data count: $itemCount")
-    }
+    var data = listOf<Contact>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     class ViewHolder(
         itemView: View,
@@ -46,6 +48,12 @@ class ContactListAdapter(private val data: List<Contact>,
             contactRingtone.setOnClickListener {
                 ringtone.play()
             }
+
+            itemView.setOnClickListener {
+                it.findNavController().navigate(
+                    R.id.action_contactListFragment_to_contactInfoFragment
+                )
+            }
         }
 
         companion object {
@@ -66,5 +74,8 @@ class ContactListAdapter(private val data: List<Contact>,
         holder.bind(item)
     }
 
-    override fun getItemCount() = data.size
+    override fun getItemCount(): Int {
+        Log.d(TAG, "Data size is ${data.size}")
+        return data.size
+    }
 }

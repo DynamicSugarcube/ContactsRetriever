@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">ContactsRetriever</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="play_ringtone_string">Play ringtone</string>
+    <string name="phones_string">Phones:</string>
+    <string name="emails_string">Emails:</string>
+    <string name="groups_string">Groups:</string>
 </resources>

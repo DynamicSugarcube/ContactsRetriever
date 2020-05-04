@@ -1,28 +1,19 @@
 package com.example.contactsretriever
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.media.Ringtone
 import android.media.RingtoneManager
 import android.net.Uri
-import android.provider.MediaStore
 
 data class Contact(
-    val id: Int,
+    val id: String,
     val name: String,
     val photoUri: String,
-    val ringerUri: String,
-    val phones: MutableList<Phone> = mutableListOf(),
-    val emails: MutableList<String> = mutableListOf(),
-    val groups: HashMap<String, String> = hashMapOf()
+    val ringerUri: String
 ) {
 
     val firstName = name.substringBeforeLast(" ")
-    val lastName = if (name.contains(" ")) {
-        name.substringAfterLast(" ")
-    } else {
-        ""
-    }
+    val lastName = if (name.contains(" ")) name.substringAfterLast(" ") else ""
 
     data class Phone(
         val number: String,

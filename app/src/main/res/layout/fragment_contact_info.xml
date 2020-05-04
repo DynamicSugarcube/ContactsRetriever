@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/contact_photo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="@dimen/medium_margin"
+        android:layout_marginTop="@dimen/medium_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:mipmap/sym_def_app_icon" />
+
+    <Button
+        android:id="@+id/play_ringtone_button"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/medium_margin"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:text="@string/play_ringtone_string"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contact_photo" />
+
+    <TextView
+        android:id="@+id/contact_first_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginTop="@dimen/medium_margin"
+        app:layout_constraintStart_toEndOf="@+id/contact_photo"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Contact First Name" />
+
+    <TextView
+        android:id="@+id/contact_last_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        app:layout_constraintStart_toEndOf="@+id/contact_photo"
+        app:layout_constraintTop_toBottomOf="@+id/contact_first_name"
+        tools:text="Contact Last Name" />
+
+    <TextView
+        android:id="@+id/phones_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        android:text="@string/phones_string"
+        app:layout_constraintStart_toEndOf="@id/contact_photo"
+        app:layout_constraintTop_toBottomOf="@+id/contact_last_name" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/phones_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        app:layout_constraintStart_toEndOf="@id/contact_photo"
+        app:layout_constraintTop_toBottomOf="@+id/phones_text" />
+
+    <TextView
+        android:id="@+id/emails_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        android:text="@string/emails_string"
+        app:layout_constraintStart_toEndOf="@+id/contact_photo"
+        app:layout_constraintTop_toBottomOf="@id/phones_recycler_view" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/emails_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        app:layout_constraintStart_toEndOf="@id/contact_photo"
+        app:layout_constraintTop_toBottomOf="@+id/emails_text" />
+
+    <TextView
+        android:id="@+id/groups_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        android:text="@string/groups_string"
+        app:layout_constraintStart_toEndOf="@+id/contact_photo"
+        app:layout_constraintTop_toBottomOf="@id/emails_recycler_view" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/groups_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        app:layout_constraintStart_toEndOf="@id/contact_photo"
+        app:layout_constraintTop_toBottomOf="@+id/groups_text" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,5 +9,13 @@
         android:id="@+id/contactListFragment"
         android:name="com.example.contactsretriever.contactlist.ContactListFragment"
         android:label="fragment_contact_list"
-        tools:layout="@layout/fragment_contact_list" />
+        tools:layout="@layout/fragment_contact_list" >
+        <action
+            android:id="@+id/action_contactListFragment_to_contactInfoFragment"
+            app:destination="@id/contactInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/contactInfoFragment"
+        android:name="com.example.contactsretriever.contactinfo.ContactInfoFragment"
+        android:label="ContactInfoFragment" />
 </navigation>
