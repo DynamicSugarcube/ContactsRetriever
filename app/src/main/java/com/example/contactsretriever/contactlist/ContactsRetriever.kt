@@ -3,10 +3,13 @@ package com.example.contactsretriever.contactlist
 import android.content.ContentResolver
 import android.database.Cursor
 import android.provider.ContactsContract
+import android.util.Log
 import com.example.contactsretriever.Contact
 import kotlinx.coroutines.*
 
 class ContactsRetriever(private val contentResolver: ContentResolver) {
+
+    private val TAG = "ContactsRetriever"
 
     suspend fun fetchContacts() = withContext(Dispatchers.IO) {
             async { retrieveContacts() }
@@ -16,6 +19,8 @@ class ContactsRetriever(private val contentResolver: ContentResolver) {
     }
 
     private suspend fun retrieveContacts() = withContext(Dispatchers.IO) {
+        Log.d(TAG, "Retrieving contacts...")
+
         // Configure URI to search in the local directory
         var uri = ContactsContract.Contacts.CONTENT_URI
         uri = uri.buildUpon().appendQueryParameter(
@@ -57,9 +62,13 @@ class ContactsRetriever(private val contentResolver: ContentResolver) {
 
             cursor.close()
         }
+
+        Log.d(TAG, "Contacts retrieving is done")
     }
 
     private suspend fun retrievePhones() = withContext(Dispatchers.IO) {
+        Log.d(TAG, "Retrieving phones...")
+
         val cursor: Cursor? = getCursorByType(
             ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE
         )
@@ -96,9 +105,13 @@ class ContactsRetriever(private val contentResolver: ContentResolver) {
 
             cursor.close()
         }
+
+        Log.d(TAG, "Phones retrieving is done")
     }
 
     private suspend fun retrieveEmails() = withContext(Dispatchers.IO) {
+        Log.d(TAG, "Retrieving emails...")
+
         val cursor: Cursor? = getCursorByType(
             ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE
         )
@@ -122,9 +135,13 @@ class ContactsRetriever(private val contentResolver: ContentResolver) {
 
             cursor.close()
         }
+
+        Log.d(TAG, "Emails retrieving is done")
     }
 
     private suspend fun retrieveGroups() = withContext(Dispatchers.IO) {
+        Log.d(TAG, "Retrieving groups...")
+
         val cursor: Cursor? = getCursorByType(
             ContactsContract.CommonDataKinds.GroupMembership.CONTENT_ITEM_TYPE
         )
@@ -148,6 +165,8 @@ class ContactsRetriever(private val contentResolver: ContentResolver) {
 
             cursor.close()
         }
+
+        Log.d(TAG, "Groups retrieving is done")
     }
 
     private fun getCursorByType(type: String): Cursor? = contentResolver.query(

@@ -30,8 +30,6 @@ class ContactListFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(ContactListViewModel::class.java)
 
-        viewModel.fetchContacts()
-
         viewManager = LinearLayoutManager(this.context)
         viewAdapter = ContactListAdapter(viewModel)
 

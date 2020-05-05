@@ -17,6 +17,10 @@ class ContactListViewModel(application: Application) : ViewModel() {
     private val contentResolver: ContentResolver = application.contentResolver
     val context: Context = application.applicationContext
 
+    init {
+        fetchContacts()
+    }
+
     private val contactsRetriever = ContactsRetriever(contentResolver)
 
     val contacts: MutableLiveData<List<Contact>> =
