@@ -17,5 +17,9 @@
     <fragment
         android:id="@+id/contactInfoFragment"
         android:name="com.example.contactsretriever.contactinfo.ContactInfoFragment"
-        android:label="ContactInfoFragment" />
+        android:label="ContactInfoFragment" >
+        <argument
+            android:name="Contact"
+            app:argType="com.example.contactsretriever.Contact" />
+    </fragment>
 </navigation>

@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.contactsretriever.Contact
@@ -26,6 +27,8 @@ class ContactListAdapter(private val viewModel: ContactListViewModel) :
         itemView: View,
         private val viewModel: ContactListViewModel
     ) : RecyclerView.ViewHolder(itemView) {
+
+        private val KEY_CONTACT = "contact"
 
         private val contactFirstName = itemView.contact_first_name
         private val contactLastName = itemView.contact_last_name
@@ -50,8 +53,9 @@ class ContactListAdapter(private val viewModel: ContactListViewModel) :
             }
 
             itemView.setOnClickListener {
+                val bundle = bundleOf(KEY_CONTACT to contact)
                 it.findNavController().navigate(
-                    R.id.action_contactListFragment_to_contactInfoFragment
+                    R.id.action_contactListFragment_to_contactInfoFragment, bundle
                 )
             }
         }

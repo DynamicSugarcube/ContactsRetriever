@@ -58,7 +58,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/phones_recycler_view"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="100dp"
         android:layout_marginStart="@dimen/small_margin"
         android:layout_marginTop="@dimen/small_margin"
         app:layout_constraintStart_toEndOf="@id/contact_photo"
@@ -77,7 +77,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/emails_recycler_view"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="100dp"
         android:layout_marginStart="@dimen/small_margin"
         android:layout_marginTop="@dimen/small_margin"
         app:layout_constraintStart_toEndOf="@id/contact_photo"
@@ -96,7 +96,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/groups_recycler_view"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="100dp"
         android:layout_marginStart="@dimen/small_margin"
         android:layout_marginTop="@dimen/small_margin"
         app:layout_constraintStart_toEndOf="@id/contact_photo"
